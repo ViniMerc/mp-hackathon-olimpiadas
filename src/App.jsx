@@ -1,54 +1,66 @@
 import { useState } from "react";
-import "./App.css";
-import { Button, Dialog, Grid, Paper, Select, Stack, Typography } from "@mui/material";
+import "./css/App.css";
+import { Button, Grid, Paper, Stack } from "@mui/material";
+import Cards from "./components/Cards";
+import GlobalTheme from "./theme/GlobalTheme";
+import MenuDialog from "./components/dialogs/MenuDialog";
 
 function App() {
-  const [openDialog, setOpenDialog] = useState(false);
+  const [openMenuDialog, setOpenMenuDialog] = useState(false);
 
   return (
-    <>
-      <Typography variant="h2" align="center" color="white" mb={6}>
-        {" "}
-        PokéOlympics{" "}
-      </Typography>
+    <GlobalTheme>
+      <img
+        src="src\assets\logo.svg"
+        style={{
+          marginBottom: "30px",
+        }}
+      />
       <Grid container spacing={2}>
         <Paper
           elevation={3}
           sx={{
-            backgroundColor: "green",
-            width: "800px",
+            backgroundColor: "white",
+            width: "100%",
             height: "600px",
           }}
         >
           <Grid container spacing={2}>
-            {/*Stack of buttons like a row in the top of the paper*/}
             <Grid item xs={12}>
-              <Stack direction="row" spacing={2} mt={2} ml={2}>
-                <button>Modalidade</button>
-                <button>Pais</button>
-                <button>Pokemon</button>
+              <Stack direction="row" fullWidth spacing={2} mt={2} ml={2} mr={2}>
+                <Cards title="Modalidade" description="Corrida 100mts" />
+                <Cards title="Pais" description="Brasil" />
+                <Cards title="Pokemon" description="Pikachu" />
               </Stack>
             </Grid>
-            {/** A empty block that will contains some data later  */}
+
             <Grid item xs={12}>
               <Paper
-                elevation={3}
+                elevation={0}
                 sx={{
                   backgroundColor: "white",
-                  width: "400px",
-                  height: "400px",
+                  width: "100%",
+                  height: "350px",
                 }}
               ></Paper>
             </Grid>
             <Grid item xs={12}>
-              <Stack direction="row" spacing={2} mt={2} ml={2}>
+              <Stack direction="row-reverse" spacing={2} m={2}>
                 <Button variant="contained" color="primary">
                   Jogar
+                </Button>
+                <Button variant="contained" color="secondary">
+                  Como jogar
+                </Button>
+                <Button variant="contained" color="secondary">
+                  Placar
                 </Button>
                 <Button
                   variant="contained"
                   color="secondary"
-                  onClick={() => setOpenDialog(true)}
+                  onClick={() => {
+                    setOpenMenuDialog(true);
+                  }}
                 >
                   Menu
                 </Button>
@@ -57,28 +69,15 @@ function App() {
           </Grid>
         </Paper>
       </Grid>
-      {openDialog && (
-        <Dialog open={openDialog} onClose={() => setOpenDialog(false)}   >
-            {/* a column stack with 4 select fields and a button  */}
-          <Stack direction="column" spacing={2} m={2} width={450} height={600}>
-            <Select label="Modalidades" />
-            <Select label="Escolher pokemon" />
-            <Select label="Escolher país" />
- 
-            <Button
-              variant="contained"
-              color="secondary"
-              onClick={() => setOpenDialog(false)}
-            >
-              Fechar
-            </Button>
-            <Typography variant="h6" align="center" color="white">
-              Como Jogar
-            </Typography>
-          </Stack>
-        </Dialog>
+      {openMenuDialog && (
+        <MenuDialog
+          open={openMenuDialog}
+          onClose={() => {
+            setOpenMenuDialog(false);
+          }}
+        />
       )}
-    </>
+    </GlobalTheme>
   );
 }
 
