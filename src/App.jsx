@@ -11,7 +11,7 @@ function App() {
   return (
     <GlobalTheme>
       <img
-        src="src\assets\logo.svg"
+        src="/logo.svg"
         style={{
           marginBottom: "30px",
         }}
