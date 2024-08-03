@@ -1,8 +1,8 @@
-import { apiPokemon } from "../api/apiPokemon";
+import { apiOlympic } from "../api/apiOlympic";
 
 export default async () => {
   try {
-    const { data } = await apiPokemon.get(`/pokemon?limit=121&offset=0`);
+    const { data } = await apiOlympic.get(`/countries`);
     console.log(data);
     return {
       success: true,

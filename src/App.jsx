@@ -4,16 +4,26 @@ import { Button, Grid, Paper, Stack } from "@mui/material";
 import Cards from "./components/Cards";
 import GlobalTheme from "./theme/GlobalTheme";
 import MenuDialog from "./components/dialogs/MenuDialog";
+import Game1 from "./components/Game1";
+import RankDialog from "./components/dialogs/RankDialog";
 
 function App() {
   const [openMenuDialog, setOpenMenuDialog] = useState(false);
+  const [openRankDialog, setOpenRankDialog] = useState(false);
+  const [gameOptions, setGameOptions] = useState({
+    modality: "",
+    country: "",
+    pokemon: "",
+  });
+
+  console.log(gameOptions);
 
   return (
     <GlobalTheme>
       <img
         src="/logo.svg"
         style={{
-          marginBottom: "30px",
+          marginBottom: "20px",
         }}
       />
       <Grid container spacing={2}>
@@ -28,21 +38,24 @@ function App() {
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <Stack direction="row" fullWidth spacing={2} mt={2} ml={2} mr={2}>
-                <Cards title="Modalidade" description="Corrida 100mts" />
-                <Cards title="Pais" description="Brasil" />
-                <Cards title="Pokemon" description="Pikachu" />
+                <Cards title="Modalidade" description={gameOptions.modality} />
+                <Cards title="Pais" description={gameOptions.country} />
+                <Cards title="Pokemon" description={gameOptions.pokemon} />
               </Stack>
             </Grid>
 
-            <Grid item xs={12}>
+            <Grid item xs={12} mt={2}>
               <Paper
                 elevation={0}
                 sx={{
-                  backgroundColor: "white",
+                  borderRadius: "0px",
+                  backgroundColor: "#F6F5F5",
                   width: "100%",
                   height: "350px",
                 }}
-              ></Paper>
+              >
+                <Game1 />
+              </Paper>
             </Grid>
             <Grid item xs={12}>
               <Stack direction="row-reverse" spacing={2} m={2}>
@@ -52,7 +65,13 @@ function App() {
                 <Button variant="contained" color="secondary">
                   Como jogar
                 </Button>
-                <Button variant="contained" color="secondary">
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  onClick={() => {
+                    setOpenRankDialog(true);
+                  }}
+                >
                   Placar
                 </Button>
                 <Button
@@ -72,9 +91,20 @@ function App() {
       {openMenuDialog && (
         <MenuDialog
           open={openMenuDialog}
+          setGameOptions={setGameOptions}
+          gameOptions={gameOptions}
           onClose={() => {
             setOpenMenuDialog(false);
+            if (gameOptions.pokemon !== "") {
+              // pesquisa o sprite do pokemon e seta na image
+            }
           }}
+        />
+      )}
+      {openRankDialog && (
+        <RankDialog
+          open={openRankDialog}
+          onClose={() => setOpenRankDialog(false)}
         />
       )}
     </GlobalTheme>

@@ -9,28 +9,92 @@ import {
   Select,
   Stack,
 } from "@mui/material";
+import { useEffect, useState } from "react";
+import listPokemons from "../../services/listPokemons";
+import listModalities from "../../services/listModalities";
+import listCountries from "../../services/listCountries";
 
-const MenuDialog = ({ open, onClose }) => {
+const MenuDialog = ({ open, onClose, setGameOptions, gameOptions }) => {
+  const [pokemonList, setPokemonList] = useState([]);
+  const [modalityList, setModalityList] = useState([]);
+  const [countryList, setCountryList] = useState([]);
+
+  useEffect(() => {
+    if (!open) return;
+
+    listPokemons().then((response) => {
+      console.log(response);
+      setPokemonList(response.data.results);
+    });
+    listModalities().then((response) => {
+      console.log(response);
+      setModalityList(response.data.data);
+    });
+    listCountries().then((response) => {
+      console.log(response);
+      setCountryList(response.data.data);
+    });
+  }, [open]);
+
   return (
     <Dialog open={open} onClose={onClose}>
       <DialogTitle>Menu</DialogTitle>
       <Stack direction="column" spacing={2} m={2} width={450}>
         <FormControl fullWidth>
           <InputLabel>Escolha a modalidade</InputLabel>
-          <Select label="Escolha a modalidade">
-            <MenuItem value="1">Corrida</MenuItem>
+          <Select
+            label="Escolha a modalidade"
+            value={gameOptions.modality}
+            onChange={(event) =>
+              setGameOptions((prev) => ({
+                ...prev,
+                modality: event.target.value,
+              }))
+            }
+          >
+            {modalityList.map((modality) => (
+              <MenuItem key={modality.id} value={modality.name}>
+                {modality.name}
+              </MenuItem>
+            ))}
           </Select>
         </FormControl>
         <FormControl fullWidth>
           <InputLabel>Escolha o pokemon</InputLabel>
-          <Select label="Escolha o pokemon">
-            <MenuItem value="1">Pikachu</MenuItem>
+          <Select
+            label="Escolha o pokemon"
+            value={gameOptions.pokemon}
+            onChange={(event) =>
+              setGameOptions((prev) => ({
+                ...prev,
+                pokemon: event.target.value,
+              }))
+            }
+          >
+            {pokemonList.map((pokemon) => (
+              <MenuItem key={pokemon.name} value={pokemon.name}>
+                {pokemon.name}
+              </MenuItem>
+            ))}
           </Select>
         </FormControl>
         <FormControl fullWidth>
           <InputLabel>Escolha o país</InputLabel>
-          <Select label="Escolha o país">
-            <MenuItem value="1">Brasil</MenuItem>
+          <Select
+            label="Escolha o país"
+            value={gameOptions.country}
+            onChange={(event) =>
+              setGameOptions((prev) => ({
+                ...prev,
+                country: event.target.value,
+              }))
+            }
+          >
+            {countryList.map((country) => (
+              <MenuItem key={country.id} value={country.name}>
+                {country.name}
+              </MenuItem>
+            ))}
           </Select>
         </FormControl>
         <Stack direction="row-reverse" spacing={2}>

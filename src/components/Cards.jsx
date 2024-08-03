@@ -6,10 +6,11 @@ const Cards = ({ description, title }) => {
     <Card
       sx={{
         minWidth: 270,
+        maxHeight: 90,
       }}
     >
       <CardContent>
-        <Stack direction="row" spacing={2} mt={2} ml={2}>
+        <Stack direction="row" spacing={2} mt={0} ml={2}>
           <Avatar
             variant="rounded"
             sx={{
