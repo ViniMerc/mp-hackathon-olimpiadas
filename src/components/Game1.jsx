@@ -1,13 +1,14 @@
+/* eslint-disable react/prop-types */
 import { Grid, IconButton, Paper, Stack, Typography } from "@mui/material";
 import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import ClearIcon from "@mui/icons-material/Clear";
 import SyncIcon from "@mui/icons-material/Sync";
 
-import { useState } from "react";
-const Game1 = () => {
+import { useEffect, useState } from "react";
+const Game1 = ({ disabled, setDisabled, points, setPoints }) => {
   const [myAttack, setMyAttack] = useState("");
-  const [disabled, setDisabled] = useState(false);
+
   const [opponentAttack, setOpponentAttack] = useState(0);
 
   const winner =
@@ -25,6 +26,16 @@ const Game1 = () => {
       setDisabled(false);
     }, 1200);
   };
+
+  console.log(points);
+
+  useEffect(() => {
+    if (winner === "Você venceu!") {
+      setPoints((prevPoints) => prevPoints + 1);
+
+      // show notification +1 point
+    }
+  }, [setPoints, winner]);
 
   return (
     <Grid container spacing={1}>

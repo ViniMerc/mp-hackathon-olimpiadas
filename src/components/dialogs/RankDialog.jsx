@@ -18,7 +18,18 @@ const RankDialog = ({ open, onClose }) => {
     { id: "goldMedals", label: "Ouro", minWidth: 80, align: "center" },
     { id: "silverMedals", label: "Prata", minWidth: 80, align: "center" },
     { id: "bronzeMedals", label: "Bronze", minWidth: 80, align: "center" },
-    { id: "pokeNumbers", label: "Pokemons", minWidth: 80, align: "center" },
+    {
+      id: "pokeNumbers",
+      label: "Medalhas Pokemon",
+      minWidth: 80,
+      align: "center",
+    },
+    {
+      id: "total",
+      label: "Total ",
+      minWidth: 80,
+      align: "center",
+    },
   ];
 
   const rows = [
@@ -28,6 +39,7 @@ const RankDialog = ({ open, onClose }) => {
       silverMedals: 2,
       bronzeMedals: 2,
       pokeNumbers: 23,
+      total: 36,
     },
     {
       name: "Japão",
@@ -35,6 +47,7 @@ const RankDialog = ({ open, onClose }) => {
       silverMedals: 5,
       bronzeMedals: 3,
       pokeNumbers: 20,
+      total: 38,
     },
     {
       name: "Estados Unidos",
@@ -42,6 +55,7 @@ const RankDialog = ({ open, onClose }) => {
       silverMedals: 6,
       bronzeMedals: 5,
       pokeNumbers: 15,
+      total: 34,
     },
     {
       name: "Alemanha",
@@ -49,6 +63,7 @@ const RankDialog = ({ open, onClose }) => {
       silverMedals: 8,
       bronzeMedals: 4,
       pokeNumbers: 10,
+      total: 28,
     },
     {
       name: "China",
@@ -56,6 +71,7 @@ const RankDialog = ({ open, onClose }) => {
       silverMedals: 10,
       bronzeMedals: 6,
       pokeNumbers: 5,
+      total: 25,
     },
   ];
 
@@ -67,7 +83,7 @@ const RankDialog = ({ open, onClose }) => {
           maxHeight: 300,
         }}
       >
-        <Table sx={{ minWidth: 200 }} aria-label="simple table">
+        <Table sx={{ minWidth: 200 }}>
           <TableHead>
             <TableRow>
               {columns.map((column) => (
@@ -81,7 +97,7 @@ const RankDialog = ({ open, onClose }) => {
               ))}
             </TableRow>
           </TableHead>
-          <TableBody>
+          <TableBody sx={{}}>
             {rows.map((row) => (
               <TableRow key={row.name}>
                 <TableCell component="th" scope="row">
@@ -91,6 +107,7 @@ const RankDialog = ({ open, onClose }) => {
                 <TableCell align="center">{row.silverMedals}</TableCell>
                 <TableCell align="center">{row.bronzeMedals}</TableCell>
                 <TableCell align="center">{row.pokeNumbers}</TableCell>
+                <TableCell align="center">{row.total}</TableCell>
               </TableRow>
             ))}
           </TableBody>

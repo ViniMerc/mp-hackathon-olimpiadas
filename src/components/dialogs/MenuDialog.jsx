@@ -10,9 +10,9 @@ import {
   Stack,
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import listPokemons from "../../services/listPokemons";
-import listModalities from "../../services/listModalities";
-import listCountries from "../../services/listCountries";
+// import listPokemons from "../../services/listPokemons";
+// import listModalities from "../../services/listModalities";
+// import listCountries from "../../services/listCountries";
 
 const MenuDialog = ({ open, onClose, setGameOptions, gameOptions }) => {
   const [pokemonList, setPokemonList] = useState([]);
@@ -21,20 +21,61 @@ const MenuDialog = ({ open, onClose, setGameOptions, gameOptions }) => {
 
   useEffect(() => {
     if (!open) return;
-
-    listPokemons().then((response) => {
-      console.log(response);
-      setPokemonList(response.data.results);
-    });
-    listModalities().then((response) => {
-      console.log(response);
-      setModalityList(response.data.data);
-    });
-    listCountries().then((response) => {
-      console.log(response);
-      setCountryList(response.data.data);
-    });
+    setCountryList([
+      {
+        name: "Brasil",
+        id: 1,
+      },
+      {
+        name: "Japão",
+        id: 2,
+      },
+    ]);
+    setModalityList([
+      {
+        name: "Atletismo",
+        id: 1,
+      },
+      {
+        name: "Natação",
+        id: 2,
+      },
+    ]);
+    setPokemonList([
+      {
+        name: "Bulbasaur",
+        id: 1,
+      },
+      {
+        name: "Ivysaur",
+        id: 2,
+      },
+    ]);
+    // listPokemons().then((response) => {
+    //   console.log(response);
+    //   setPokemonList(response.data.results);
+    // });
+    // listModalities().then((response) => {
+    //   console.log(response);
+    //   setModalityList(response.data.data);
+    // });
+    // listCountries().then((response) => {
+    //   console.log(response);
+    //   setCountryList(response.data.data);
+    // });
   }, [open]);
+
+  const handleValidate = () => {
+    if (
+      gameOptions.modality === "" ||
+      gameOptions.country === "" ||
+      gameOptions.pokemon === ""
+    ) {
+      alert("Preencha todos os campos"); //add snackbar from mui
+    } else {
+      onClose();
+    }
+  };
 
   return (
     <Dialog open={open} onClose={onClose}>
@@ -98,7 +139,13 @@ const MenuDialog = ({ open, onClose, setGameOptions, gameOptions }) => {
           </Select>
         </FormControl>
         <Stack direction="row-reverse" spacing={2}>
-          <Button variant="contained" color="primary" onClick={onClose}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => {
+              handleValidate();
+            }}
+          >
             Salvar
           </Button>
           <Button variant="text" color="primary" onClick={onClose}>

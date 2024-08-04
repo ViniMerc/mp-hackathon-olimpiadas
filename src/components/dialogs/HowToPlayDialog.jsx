@@ -1,0 +1,52 @@
+/* eslint-disable react/prop-types */
+import {
+  Button,
+  Dialog,
+  DialogTitle,
+  Grid,
+  Stack,
+  Typography,
+} from "@mui/material";
+
+const HowToPlayDialog = ({ open, onClose }) => {
+  return (
+    <Dialog open={open} onClose={onClose}>
+      <DialogTitle>Bem vindo!</DialogTitle>
+      <Grid
+        container
+        justifyContent="center"
+        alignItems="center"
+        spacing={2}
+        py={2}
+        my={1}
+      >
+        <Grid item>
+          <Stack direction="column" spacing={2} alignItems="center">
+            <Typography variant="body1">
+              Os pokemons invadiram as olimpíadas e você precisa ajudar o Brasil!
+            </Typography>
+
+            <Typography variant="body1">
+              Para jogar, selecione seu pokemon e a modalidade que deseja jogar.
+            </Typography>
+            <Typography variant="body1" sx={{
+              textAlign: "center"
+            }}>
+              {`Vença selecionando seus ataques e não se esqueça de conferir o
+              quadro de medalhas para ver se o Brasil consegiu alcançar o
+              pódio!`}
+            </Typography>
+            <Typography variant="body1">Boa sorte!</Typography>
+          </Stack>
+        </Grid>
+        <Grid item>
+          <Button variant="contained" color="primary" onClick={onClose}>
+            Começar!
+          </Button>
+        </Grid>
+      </Grid>
+    </Dialog>
+  );
+};
+
+export default HowToPlayDialog;
