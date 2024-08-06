@@ -1,15 +1,18 @@
 /* eslint-disable react/prop-types */
-import { Grid, IconButton, Paper, Stack, Typography } from "@mui/material";
+import { Grid, IconButton, Stack, Typography } from "@mui/material";
 import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import ClearIcon from "@mui/icons-material/Clear";
 import SyncIcon from "@mui/icons-material/Sync";
+import Snackbar from "@mui/material/Snackbar";
 
 import { useEffect, useState } from "react";
-const Game1 = ({ disabled, setDisabled, points, setPoints }) => {
-  const [myAttack, setMyAttack] = useState("");
+import { Handshake } from "@mui/icons-material";
+const Game1 = ({ disabled, setDisabled, setPoints, sprite }) => {
+  const [myAttack, setMyAttack] = useState(-1);
+  const [opponentAttack, setOpponentAttack] = useState(-1);
 
-  const [opponentAttack, setOpponentAttack] = useState(0);
+  const [randomSprite, setRandomSprite] = useState(0);
 
   const winner =
     myAttack > opponentAttack
@@ -27,13 +30,10 @@ const Game1 = ({ disabled, setDisabled, points, setPoints }) => {
     }, 1200);
   };
 
-  console.log(points);
-
   useEffect(() => {
     if (winner === "Você venceu!") {
       setPoints((prevPoints) => prevPoints + 1);
-
-      // show notification +1 point
+      setRandomSprite(Math.floor(Math.random() * 151) + 1);
     }
   }, [setPoints, winner]);
 
@@ -41,25 +41,25 @@ const Game1 = ({ disabled, setDisabled, points, setPoints }) => {
     <Grid container spacing={1}>
       <Grid item xs={12}>
         <Stack direction="row" fullWidth spacing="auto" mt={2} mx={30}>
-          {myAttack === "1" && (
+          {myAttack === 1 && (
             <img
               src="src\assets\game1\attack1.png"
               style={{ width: "100px" }}
             />
           )}
-          {myAttack === "2" && (
+          {myAttack === 2 && (
             <img
               src="src\assets\game1\attack2.png"
               style={{ width: "100px" }}
             />
           )}
-          {myAttack === "3" && (
+          {myAttack === 3 && (
             <img
               src="src\assets\game1\attack3.png"
               style={{ width: "100px" }}
             />
           )}
-          {myAttack === "" && (
+          {myAttack === 0 && (
             <HelpOutlineIcon
               sx={{
                 fontSize: 100,
@@ -74,6 +74,11 @@ const Game1 = ({ disabled, setDisabled, points, setPoints }) => {
           {!disabled && winner === "Você perdeu!" && (
             <ClearIcon sx={{ fontSize: 100 }} />
           )}
+
+          {!disabled &&
+            winner === "Empate!" &&
+            myAttack !== -1 &&
+            opponentAttack !== -1 && <Handshake sx={{ fontSize: 100 }} />}
 
           {opponentAttack === 1 && (
             <img
@@ -103,21 +108,26 @@ const Game1 = ({ disabled, setDisabled, points, setPoints }) => {
         </Stack>
       </Grid>
       <Grid item xs={12}>
-        {disabled && <Typography variant="h6">Carregando...</Typography>}
-        {!disabled && <Typography variant="h6">{winner}</Typography>}
+        {disabled && <Typography variant="h6">Competindo...</Typography>}
+        {!disabled && (
+          <Typography variant="h6">
+            {myAttack === -1 ? "Escolha um ataque" : winner}
+          </Typography>
+        )}
       </Grid>
       <Grid item xs={12}>
-        <Stack direction="row" fullWidth spacing="auto" mt={2} mx={10}>
-          <Paper
+        <Stack direction="row" fullWidth spacing="auto" mt={2} mx={8}>
+          {/* <Paper
             sx={{
               backgroundColor: "red",
               width: "100px",
               height: "100px",
             }}
-          />
+          /> */}
+          <img src={sprite} style={{ width: "150px", height: "150px" }} />
           <IconButton
             onClick={() => {
-              setMyAttack("1");
+              setMyAttack(1);
               handleAttack();
             }}
             disabled={disabled}
@@ -129,7 +139,7 @@ const Game1 = ({ disabled, setDisabled, points, setPoints }) => {
           </IconButton>
           <IconButton
             onClick={() => {
-              setMyAttack("2");
+              setMyAttack(2);
               handleAttack();
             }}
             disabled={disabled}
@@ -141,7 +151,7 @@ const Game1 = ({ disabled, setDisabled, points, setPoints }) => {
           </IconButton>
           <IconButton
             onClick={() => {
-              setMyAttack("3");
+              setMyAttack(3);
               handleAttack();
             }}
             disabled={disabled}
@@ -152,18 +162,25 @@ const Game1 = ({ disabled, setDisabled, points, setPoints }) => {
             />
           </IconButton>
 
-          <Paper
+          {/* <Paper
             sx={{
               backgroundColor: "red",
               width: "100px",
               height: "100px",
             }}
+          /> */}
+          <img
+            src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${randomSprite}.png`}
+            style={{ width: "150px", height: "150px" }}
           />
         </Stack>
       </Grid>
-      <Grid item xs={12}>
-        <Typography variant="h6">Escolha um ataque</Typography>
-      </Grid>
+
+      <Snackbar
+        open={myAttack !== -1 && winner === "Você venceu!"}
+        autoHideDuration={6000}
+        message="+1 Medalha Pokemon!"
+      />
     </Grid>
   );
 };

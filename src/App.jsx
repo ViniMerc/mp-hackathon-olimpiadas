@@ -7,16 +7,26 @@ import MenuDialog from "./components/dialogs/MenuDialog";
 import Game1 from "./components/Game1";
 import RankDialog from "./components/dialogs/RankDialog";
 import HowToPlayDialog from "./components/dialogs/HowToPlayDialog";
+import listPokemonsSprite from "./services/listPokemonsSprite";
 
 function App() {
-  const [openMenuDialog, setOpenMenuDialog] = useState(false);
-  const [openRankDialog, setOpenRankDialog] = useState(false);
-  const [howToPlayDialog, setHowToPlayDialog] = useState(true);
+  const [dialogs, setDialogs] = useState({
+    menu: false,
+    rank: false,
+    howToPlay: true,
+  });
+
+  const handleDialogs = (dialog) => {
+    setDialogs({
+      ...dialogs,
+      [dialog]: !dialogs[dialog],
+    });
+  };
+
+  const [pokeSprite, setPokeSprite] = useState("");
 
   const [points, setPoints] = useState(0);
-
   const [disabled, setDisabled] = useState(false);
-
   const [gameOptions, setGameOptions] = useState({
     modality: "",
     country: "",
@@ -28,7 +38,7 @@ function App() {
       <img
         src="/logo.svg"
         style={{
-          marginBottom: "20px",
+          marginBottom: "40px",
         }}
       />
       <Grid container spacing={2}>
@@ -79,7 +89,7 @@ function App() {
                       variant="contained"
                       color="primary"
                       onClick={() => {
-                        setOpenMenuDialog(true);
+                        handleDialogs("menu");
                       }}
                     >
                       Jogar
@@ -89,19 +99,19 @@ function App() {
                   <Game1
                     disabled={disabled}
                     setDisabled={setDisabled}
-                    points={points}
                     setPoints={setPoints}
+                    sprite={pokeSprite}
                   />
                 )}
               </Paper>
             </Grid>
             <Grid item xs={12}>
-              <Stack direction="row-reverse" spacing={2} m={2}>
+              <Stack direction="row-reverse" spacing={2} mb={2} mr={2}>
                 <Button
                   variant="contained"
                   color="primary"
                   onClick={() => {
-                    setOpenMenuDialog(true);
+                    handleDialogs("menu");
                   }}
                   disabled={disabled}
                 >
@@ -111,7 +121,7 @@ function App() {
                   variant="contained"
                   color="secondary"
                   onClick={() => {
-                    setHowToPlayDialog(true);
+                    handleDialogs("howToPlay");
                   }}
                 >
                   Como jogar
@@ -120,7 +130,7 @@ function App() {
                   variant="contained"
                   color="secondary"
                   onClick={() => {
-                    setOpenRankDialog(true);
+                    handleDialogs("rank");
                   }}
                 >
                   Mural de Medalhas
@@ -130,29 +140,33 @@ function App() {
           </Grid>
         </Paper>
       </Grid>
-      {openMenuDialog && (
+      {dialogs.menu && (
         <MenuDialog
-          open={openMenuDialog}
+          open={dialogs.menu}
           setGameOptions={setGameOptions}
           gameOptions={gameOptions}
           onClose={() => {
-            setOpenMenuDialog(false);
+            handleDialogs("menu");
             if (gameOptions.pokemon !== "") {
-              // pesquisa o sprite do pokemon e seta na image
+              listPokemonsSprite(gameOptions.pokemon).then((response) => {
+                setPokeSprite(response.data.sprites.front_default);
+              });
             }
           }}
         />
       )}
-      {openRankDialog && (
+      {dialogs.rank && (
         <RankDialog
-          open={openRankDialog}
-          onClose={() => setOpenRankDialog(false)}
+          open={dialogs.rank}
+          onClose={() => {
+            handleDialogs("rank");
+          }}
         />
       )}
-      {howToPlayDialog && (
+      {dialogs.howToPlay && (
         <HowToPlayDialog
-          open={howToPlayDialog}
-          onClose={() => setHowToPlayDialog(false)}
+          open={dialogs.howToPlay}
+          onClose={() => handleDialogs("howToPlay")}
         />
       )}
     </GlobalTheme>

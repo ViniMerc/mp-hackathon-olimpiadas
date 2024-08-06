@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import {
+  Autocomplete,
   Button,
   Dialog,
   DialogTitle,
@@ -7,7 +8,9 @@ import {
   InputLabel,
   MenuItem,
   Select,
+  Snackbar,
   Stack,
+  TextField,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 // import listPokemons from "../../services/listPokemons";
@@ -18,6 +21,8 @@ const MenuDialog = ({ open, onClose, setGameOptions, gameOptions }) => {
   const [pokemonList, setPokemonList] = useState([]);
   const [modalityList, setModalityList] = useState([]);
   const [countryList, setCountryList] = useState([]);
+
+  const [openValidateSnackbar, setOpenValidateSnackbar] = useState(false);
 
   useEffect(() => {
     if (!open) return;
@@ -43,7 +48,7 @@ const MenuDialog = ({ open, onClose, setGameOptions, gameOptions }) => {
     ]);
     setPokemonList([
       {
-        name: "Bulbasaur",
+        name: "bulbasaur",
         id: 1,
       },
       {
@@ -71,7 +76,7 @@ const MenuDialog = ({ open, onClose, setGameOptions, gameOptions }) => {
       gameOptions.country === "" ||
       gameOptions.pokemon === ""
     ) {
-      alert("Preencha todos os campos"); //add snackbar from mui
+      setOpenValidateSnackbar(true);
     } else {
       onClose();
     }
@@ -100,25 +105,28 @@ const MenuDialog = ({ open, onClose, setGameOptions, gameOptions }) => {
             ))}
           </Select>
         </FormControl>
-        <FormControl fullWidth>
-          <InputLabel>Escolha o pokemon</InputLabel>
-          <Select
-            label="Escolha o pokemon"
-            value={gameOptions.pokemon}
-            onChange={(event) =>
-              setGameOptions((prev) => ({
-                ...prev,
-                pokemon: event.target.value,
-              }))
-            }
-          >
-            {pokemonList.map((pokemon) => (
-              <MenuItem key={pokemon.name} value={pokemon.name}>
-                {pokemon.name}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
+
+        <Autocomplete
+          value={{
+            name: gameOptions.pokemon,
+          }}
+          onChange={(event, newValue) => {
+            setGameOptions((prev) => ({
+              ...prev,
+              pokemon: newValue.name,
+            }));
+          }}
+          options={pokemonList}
+          getOptionLabel={(option) => option.name}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label="Escolha o pokemon"
+              variant="outlined"
+            />
+          )}
+        />
+
         <FormControl fullWidth>
           <InputLabel>Escolha o país</InputLabel>
           <Select
@@ -153,6 +161,16 @@ const MenuDialog = ({ open, onClose, setGameOptions, gameOptions }) => {
           </Button>
         </Stack>
       </Stack>
+      <Snackbar
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "center",
+        }}
+        open={openValidateSnackbar}
+        autoHideDuration={3000}
+        onClose={() => setOpenValidateSnackbar(false)}
+        message="Preencha todos os campos!"
+      />
     </Dialog>
   );
 };

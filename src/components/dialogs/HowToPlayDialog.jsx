@@ -17,21 +17,31 @@ const HowToPlayDialog = ({ open, onClose }) => {
         justifyContent="center"
         alignItems="center"
         spacing={2}
-        py={2}
-        my={1}
+        pb={2}
+        mb={1}
       >
         <Grid item>
           <Stack direction="column" spacing={2} alignItems="center">
             <Typography variant="body1">
-              Os pokemons invadiram as olimpíadas e você precisa ajudar o Brasil!
+              Os pokemons invadiram as olimpíadas e você precisa ajudar o
+              Brasil!
             </Typography>
 
             <Typography variant="body1">
-              Para jogar, selecione seu pokemon e a modalidade que deseja jogar.
+              Ajude o Brasil a conquistar suas medalhas e chegar ao topo da
+              classificação!
             </Typography>
-            <Typography variant="body1" sx={{
-              textAlign: "center"
-            }}>
+
+            <Typography variant="body1">
+              {" "}
+              Para jogar, selecione seu pokemon e a modalidade que vai competir.
+            </Typography>
+            <Typography
+              variant="body1"
+              sx={{
+                textAlign: "center",
+              }}
+            >
               {`Vença selecionando seus ataques e não se esqueça de conferir o
               quadro de medalhas para ver se o Brasil consegiu alcançar o
               pódio!`}
