@@ -29,7 +29,6 @@ function App() {
   const [disabled, setDisabled] = useState(false);
   const [gameOptions, setGameOptions] = useState({
     modality: "",
-    country: "",
     pokemon: "",
   });
 
@@ -161,6 +160,7 @@ function App() {
           onClose={() => {
             handleDialogs("rank");
           }}
+          points={points}
         />
       )}
       {dialogs.howToPlay && (

@@ -11,7 +11,7 @@ import { Handshake } from "@mui/icons-material";
 const Game1 = ({ disabled, setDisabled, setPoints, sprite }) => {
   const [myAttack, setMyAttack] = useState(-1);
   const [opponentAttack, setOpponentAttack] = useState(-1);
-
+  const [hideSnackbar, setHideSnackbar] = useState(false);
   const [randomSprite, setRandomSprite] = useState(0);
 
   const winner =
@@ -34,6 +34,7 @@ const Game1 = ({ disabled, setDisabled, setPoints, sprite }) => {
     if (winner === "Você venceu!") {
       setPoints((prevPoints) => prevPoints + 1);
       setRandomSprite(Math.floor(Math.random() * 151) + 1);
+      setHideSnackbar(true);
     }
   }, [setPoints, winner]);
 
@@ -117,13 +118,6 @@ const Game1 = ({ disabled, setDisabled, setPoints, sprite }) => {
       </Grid>
       <Grid item xs={12}>
         <Stack direction="row" fullWidth spacing="auto" mt={2} mx={8}>
-          {/* <Paper
-            sx={{
-              backgroundColor: "red",
-              width: "100px",
-              height: "100px",
-            }}
-          /> */}
           <img src={sprite} style={{ width: "150px", height: "150px" }} />
           <IconButton
             onClick={() => {
@@ -132,10 +126,7 @@ const Game1 = ({ disabled, setDisabled, setPoints, sprite }) => {
             }}
             disabled={disabled}
           >
-            <img
-              src="src\assets\game1\attack1.png"
-              style={{ width: "100px" }}
-            />
+            <img src="src\assets\game1\attack1.png" style={{ width: "80px" }} />
           </IconButton>
           <IconButton
             onClick={() => {
@@ -144,10 +135,7 @@ const Game1 = ({ disabled, setDisabled, setPoints, sprite }) => {
             }}
             disabled={disabled}
           >
-            <img
-              src="src\assets\game1\attack2.png"
-              style={{ width: "100px" }}
-            />
+            <img src="src\assets\game1\attack2.png" style={{ width: "80px" }} />
           </IconButton>
           <IconButton
             onClick={() => {
@@ -156,19 +144,9 @@ const Game1 = ({ disabled, setDisabled, setPoints, sprite }) => {
             }}
             disabled={disabled}
           >
-            <img
-              src="src\assets\game1\attack3.png"
-              style={{ width: "100px" }}
-            />
+            <img src="src\assets\game1\attack3.png" style={{ width: "80px" }} />
           </IconButton>
 
-          {/* <Paper
-            sx={{
-              backgroundColor: "red",
-              width: "100px",
-              height: "100px",
-            }}
-          /> */}
           <img
             src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${randomSprite}.png`}
             style={{ width: "150px", height: "150px" }}
@@ -177,8 +155,9 @@ const Game1 = ({ disabled, setDisabled, setPoints, sprite }) => {
       </Grid>
 
       <Snackbar
-        open={myAttack !== -1 && winner === "Você venceu!"}
-        autoHideDuration={6000}
+        open={hideSnackbar}
+        autoHideDuration={2500}
+        onClose={() => setHideSnackbar(false)}
         message="+1 Medalha Pokemon!"
       />
     </Grid>

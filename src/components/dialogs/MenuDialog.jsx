@@ -13,29 +13,18 @@ import {
   TextField,
 } from "@mui/material";
 import { useEffect, useState } from "react";
-// import listPokemons from "../../services/listPokemons";
-// import listModalities from "../../services/listModalities";
-// import listCountries from "../../services/listCountries";
+import listPokemons from "../../services/listPokemons";
+import listModalities from "../../services/listModalities";
 
 const MenuDialog = ({ open, onClose, setGameOptions, gameOptions }) => {
   const [pokemonList, setPokemonList] = useState([]);
   const [modalityList, setModalityList] = useState([]);
-  const [countryList, setCountryList] = useState([]);
 
   const [openValidateSnackbar, setOpenValidateSnackbar] = useState(false);
 
   useEffect(() => {
     if (!open) return;
-    setCountryList([
-      {
-        name: "Brasil",
-        id: 1,
-      },
-      {
-        name: "Japão",
-        id: 2,
-      },
-    ]);
+
     setModalityList([
       {
         name: "Atletismo",
@@ -56,26 +45,16 @@ const MenuDialog = ({ open, onClose, setGameOptions, gameOptions }) => {
         id: 2,
       },
     ]);
-    // listPokemons().then((response) => {
-    //   console.log(response);
-    //   setPokemonList(response.data.results);
-    // });
-    // listModalities().then((response) => {
-    //   console.log(response);
-    //   setModalityList(response.data.data);
-    // });
-    // listCountries().then((response) => {
-    //   console.log(response);
-    //   setCountryList(response.data.data);
-    // });
+    listPokemons().then((response) => {
+      setPokemonList(response.data.results);
+    });
+    listModalities().then((response) => {
+      setModalityList(response.data.data);
+    });
   }, [open]);
 
   const handleValidate = () => {
-    if (
-      gameOptions.modality === "" ||
-      gameOptions.country === "" ||
-      gameOptions.pokemon === ""
-    ) {
+    if (gameOptions.modality === "" || gameOptions.pokemon === "") {
       setOpenValidateSnackbar(true);
     } else {
       onClose();
@@ -127,25 +106,6 @@ const MenuDialog = ({ open, onClose, setGameOptions, gameOptions }) => {
           )}
         />
 
-        <FormControl fullWidth>
-          <InputLabel>Escolha o país</InputLabel>
-          <Select
-            label="Escolha o país"
-            value={gameOptions.country}
-            onChange={(event) =>
-              setGameOptions((prev) => ({
-                ...prev,
-                country: event.target.value,
-              }))
-            }
-          >
-            {countryList.map((country) => (
-              <MenuItem key={country.id} value={country.name}>
-                {country.name}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
         <Stack direction="row-reverse" spacing={2}>
           <Button
             variant="contained"

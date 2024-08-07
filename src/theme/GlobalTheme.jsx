@@ -5,15 +5,6 @@ import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 
 const theme = createTheme({
-  breakpoints: {
-    values: {
-      xs: 0,
-      sm: 600,
-      md: 900,
-      lg: 1200,
-      xl: 1536,
-    },
-  },
   palette: {
     primary: {
       main: "#4A249D",
