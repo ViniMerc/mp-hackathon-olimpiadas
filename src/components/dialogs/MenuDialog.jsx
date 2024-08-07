@@ -4,10 +4,6 @@ import {
   Button,
   Dialog,
   DialogTitle,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
   Snackbar,
   Stack,
   TextField,
@@ -24,27 +20,6 @@ const MenuDialog = ({ open, onClose, setGameOptions, gameOptions }) => {
 
   useEffect(() => {
     if (!open) return;
-
-    setModalityList([
-      {
-        name: "Atletismo",
-        id: 1,
-      },
-      {
-        name: "Natação",
-        id: 2,
-      },
-    ]);
-    setPokemonList([
-      {
-        name: "bulbasaur",
-        id: 1,
-      },
-      {
-        name: "Ivysaur",
-        id: 2,
-      },
-    ]);
     listPokemons().then((response) => {
       setPokemonList(response.data.results);
     });
@@ -65,25 +40,27 @@ const MenuDialog = ({ open, onClose, setGameOptions, gameOptions }) => {
     <Dialog open={open} onClose={onClose}>
       <DialogTitle>Menu</DialogTitle>
       <Stack direction="column" spacing={2} m={2} width={450}>
-        <FormControl fullWidth>
-          <InputLabel>Escolha a modalidade</InputLabel>
-          <Select
-            label="Escolha a modalidade"
-            value={gameOptions.modality}
-            onChange={(event) =>
-              setGameOptions((prev) => ({
-                ...prev,
-                modality: event.target.value,
-              }))
-            }
-          >
-            {modalityList.map((modality) => (
-              <MenuItem key={modality.id} value={modality.name}>
-                {modality.name}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
+        <Autocomplete
+          value={{
+            name: gameOptions.modality,
+          }}
+          onChange={(event, newValue) => {
+            setGameOptions((prev) => ({
+              ...prev,
+              modality: newValue.name,
+              modalityPicture: newValue.pictogram_url,
+            }));
+          }}
+          options={modalityList}
+          getOptionLabel={(option) => option.name}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label="Escolha a modalidade"
+              variant="outlined"
+            />
+          )}
+        />
 
         <Autocomplete
           value={{
@@ -115,9 +92,6 @@ const MenuDialog = ({ open, onClose, setGameOptions, gameOptions }) => {
             }}
           >
             Salvar
-          </Button>
-          <Button variant="text" color="primary" onClick={onClose}>
-            Fechar
           </Button>
         </Stack>
       </Stack>

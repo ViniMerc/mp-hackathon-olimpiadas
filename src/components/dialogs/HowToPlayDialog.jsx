@@ -12,6 +12,7 @@ const HowToPlayDialog = ({ open, onClose }) => {
   return (
     <Dialog open={open} onClose={onClose}>
       <DialogTitle>Bem vindo!</DialogTitle>
+      
       <Grid
         container
         justifyContent="center"
@@ -20,31 +21,36 @@ const HowToPlayDialog = ({ open, onClose }) => {
         pb={2}
         mb={1}
       >
-        <Grid item>
+        <Grid item mx={4}>
           <Stack direction="column" spacing={2} alignItems="center">
-            <Typography variant="body1">
-              Os pokemons invadiram as olimpíadas e você precisa ajudar o
-              Brasil!
-            </Typography>
-
-            <Typography variant="body1">
-              Ajude o Brasil a conquistar suas medalhas e chegar ao topo da
-              classificação!
-            </Typography>
-
-            <Typography variant="body1">
-              {" "}
-              Para jogar, selecione seu pokemon e a modalidade que vai competir.
-            </Typography>
             <Typography
               variant="body1"
               sx={{
                 textAlign: "center",
               }}
             >
-              {`Vença selecionando seus ataques e não se esqueça de conferir o
-              quadro de medalhas para ver se o Brasil consegiu alcançar o
-              pódio!`}
+              Os pokemons invadiram as olimpíadas e você precisa ajudar o
+              Brasil!
+            </Typography>
+
+            <Typography
+              variant="body1"
+              sx={{
+                textAlign: "center",
+              }}
+            >
+              Seu objetivo é conquistar medalhas nas competiçoes Pokemon e
+              chegar ao topo da classificação!
+            </Typography>
+
+            <Typography
+              variant="body1"
+              sx={{
+                textAlign: "center",
+              }}
+            >
+              Vença selecionando suas habilidades e não se esqueça de conferir o
+              quadro de medalhas para ver se o Brasil consegiu alcançar o pódio!
             </Typography>
             <Typography variant="body1">Boa sorte!</Typography>
           </Stack>

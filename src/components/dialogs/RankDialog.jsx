@@ -128,6 +128,13 @@ const RankDialog = ({ open, onClose, points }) => {
                         </TableCell>
                       );
                     }
+                    if (column.id === "rank") {
+                      return (
+                        <TableCell key={column.id} align={column.align}>
+                          {orderedRowsByTotalMedals.indexOf(row) + 1}
+                        </TableCell>
+                      );
+                    }
                     return (
                       <TableCell key={column.id} align={column.align}>
                         {column.format && typeof value === "number"

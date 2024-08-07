@@ -29,6 +29,7 @@ function App() {
   const [disabled, setDisabled] = useState(false);
   const [gameOptions, setGameOptions] = useState({
     modality: "",
+    modalityPicture: "",
     pokemon: "",
   });
 
@@ -52,9 +53,21 @@ function App() {
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <Stack direction="row" fullWidth spacing={2} mt={2} ml={2} mr={2}>
-                <Cards title="Modalidade" description={gameOptions.modality} />
-                <Cards title="Pokemon" description={gameOptions.pokemon} />
-                <Cards title="Medalhas" description="" avatar={points} />
+                <Cards
+                  title="Modalidade"
+                  description={gameOptions.modality}
+                  avatar={gameOptions.modalityPicture}
+                />
+                <Cards
+                  title="Pokemon"
+                  description={gameOptions.pokemon}
+                  avatar={pokeSprite}
+                />
+                <Cards
+                  title="Medalhas Pokemon"
+                  description=""
+                  points={points}
+                />
               </Stack>
             </Grid>
 

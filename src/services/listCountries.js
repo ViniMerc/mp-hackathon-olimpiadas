@@ -3,10 +3,8 @@ import { apiOlympic } from "../api/apiOlympic";
 export default async () => {
   try {
     const { data } = await apiOlympic.get(`/countries`);
-    console.log(data);
     return {
       success: true,
-
       code: 200,
       data,
     };
@@ -14,7 +12,6 @@ export default async () => {
     return {
       success: false,
       code: error.response.status,
-
       data: {},
     };
   }

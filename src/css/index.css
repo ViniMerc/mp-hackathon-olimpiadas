@@ -5,7 +5,27 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #F6F5F5;
+  background: rgb(0, 159, 189);
+  background: -moz-linear-gradient(
+    43deg,
+    rgba(0, 159, 189, 1) 0%,
+    rgba(249, 226, 175, 1) 51%,
+    rgba(74, 36, 157, 1) 100%
+  );
+  background: -webkit-linear-gradient(
+    43deg,
+    rgba(0, 159, 189, 1) 0%,
+    rgba(249, 226, 175, 1) 51%,
+    rgba(74, 36, 157, 1) 100%
+  );
+  background: linear-gradient(
+    43deg,
+    rgba(0, 159, 189, 1) 0%,
+    rgba(249, 226, 175, 1) 51%,
+    rgba(74, 36, 157, 1) 100%
+  );
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#009fbd",endColorstr="#4a249d",GradientType=1);
+  background-repeat: no-repeat;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -18,4 +38,5 @@ body {
   display: flex;
   place-items: center;
   min-width: 320px;
+  min-height: 56.9rem;
 }

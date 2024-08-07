@@ -23,7 +23,6 @@ const Game1 = ({ disabled, setDisabled, setPoints, sprite }) => {
 
   const handleAttack = () => {
     setDisabled(true);
-    // show loafing
     setTimeout(() => {
       setOpponentAttack(Math.floor(Math.random() * 3) + 1);
       setDisabled(false);
@@ -38,122 +37,86 @@ const Game1 = ({ disabled, setDisabled, setPoints, sprite }) => {
     }
   }, [setPoints, winner]);
 
+  const AttackIcon = ({ attack }) => {
+    if (attack === 1 || attack === 2 || attack === 3) {
+      return (
+        <img
+          src={`src/assets/game1/attack${attack}.png`}
+          style={{ width: "100px" }}
+          alt={`Attack ${attack}`}
+        />
+      );
+    }
+    return <HelpOutlineIcon sx={{ fontSize: 100 }} />;
+  };
+
+  const ResultIcon = ({ winner, disabled }) => {
+    if (disabled) return <SyncIcon sx={{ fontSize: 100 }} />;
+    if (winner === "Você venceu!")
+      return <EmojiEventsIcon sx={{ fontSize: 100 }} />;
+    if (winner === "Você perdeu!") return <ClearIcon sx={{ fontSize: 100 }} />;
+    if (winner === "Empate!") return <Handshake sx={{ fontSize: 100 }} />;
+    return null;
+  };
+
+  const AttackButtons = ({ setMyAttack, handleAttack, disabled }) => {
+    const attacks = [1, 2, 3];
+    return attacks.map((attack) => (
+      <IconButton
+        key={attack}
+        onClick={() => {
+          setMyAttack(attack);
+          handleAttack();
+        }}
+        sx={{ width: "80px", height: "80px", pt: 8 }}
+        disabled={disabled}
+      >
+        <img
+          src={`src/assets/game1/attack${attack}.png`}
+          style={{ width: "80px", height: "80px" }}
+          alt={`Attack ${attack}`}
+        />
+      </IconButton>
+    ));
+  };
+
   return (
     <Grid container spacing={1}>
       <Grid item xs={12}>
         <Stack direction="row" fullWidth spacing="auto" mt={2} mx={30}>
-          {myAttack === 1 && (
-            <img
-              src="src\assets\game1\attack1.png"
-              style={{ width: "100px" }}
-            />
-          )}
-          {myAttack === 2 && (
-            <img
-              src="src\assets\game1\attack2.png"
-              style={{ width: "100px" }}
-            />
-          )}
-          {myAttack === 3 && (
-            <img
-              src="src\assets\game1\attack3.png"
-              style={{ width: "100px" }}
-            />
-          )}
-          {myAttack === 0 && (
-            <HelpOutlineIcon
-              sx={{
-                fontSize: 100,
-              }}
-            />
-          )}
-          {disabled === true && <SyncIcon sx={{ fontSize: 100 }} />}
-
-          {!disabled && winner === "Você venceu!" && (
-            <EmojiEventsIcon sx={{ fontSize: 100 }} />
-          )}
-          {!disabled && winner === "Você perdeu!" && (
-            <ClearIcon sx={{ fontSize: 100 }} />
-          )}
-
-          {!disabled &&
-            winner === "Empate!" &&
-            myAttack !== -1 &&
-            opponentAttack !== -1 && <Handshake sx={{ fontSize: 100 }} />}
-
-          {opponentAttack === 1 && (
-            <img
-              src="src\assets\game1\attack1.png"
-              style={{ width: "100px" }}
-            />
-          )}
-          {opponentAttack === 2 && (
-            <img
-              src="src\assets\game1\attack2.png"
-              style={{ width: "100px" }}
-            />
-          )}
-          {opponentAttack === 3 && (
-            <img
-              src="src\assets\game1\attack3.png"
-              style={{ width: "100px" }}
-            />
-          )}
-          {opponentAttack === 0 && (
-            <HelpOutlineIcon
-              sx={{
-                fontSize: 100,
-              }}
-            />
-          )}
+          <AttackIcon attack={myAttack} />
+          <ResultIcon winner={winner} disabled={disabled} />
+          <AttackIcon attack={opponentAttack} />
         </Stack>
       </Grid>
       <Grid item xs={12}>
-        {disabled && <Typography variant="h6">Competindo...</Typography>}
-        {!disabled && (
-          <Typography variant="h6">
-            {myAttack === -1 ? "Escolha um ataque" : winner}
-          </Typography>
-        )}
+        <Typography variant="h6">
+          {disabled
+            ? "Competindo..."
+            : myAttack === -1
+            ? "Escolha um ataque"
+            : winner}
+        </Typography>
       </Grid>
       <Grid item xs={12}>
         <Stack direction="row" fullWidth spacing="auto" mt={2} mx={8}>
-          <img src={sprite} style={{ width: "150px", height: "150px" }} />
-          <IconButton
-            onClick={() => {
-              setMyAttack(1);
-              handleAttack();
-            }}
+          <img
+            src={sprite}
+            style={{ width: "150px", height: "150px" }}
+            alt="Sprite"
+          />
+          <AttackButtons
+            setMyAttack={setMyAttack}
+            handleAttack={handleAttack}
             disabled={disabled}
-          >
-            <img src="src\assets\game1\attack1.png" style={{ width: "80px" }} />
-          </IconButton>
-          <IconButton
-            onClick={() => {
-              setMyAttack(2);
-              handleAttack();
-            }}
-            disabled={disabled}
-          >
-            <img src="src\assets\game1\attack2.png" style={{ width: "80px" }} />
-          </IconButton>
-          <IconButton
-            onClick={() => {
-              setMyAttack(3);
-              handleAttack();
-            }}
-            disabled={disabled}
-          >
-            <img src="src\assets\game1\attack3.png" style={{ width: "80px" }} />
-          </IconButton>
-
+          />
           <img
             src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${randomSprite}.png`}
             style={{ width: "150px", height: "150px" }}
+            alt="Random Sprite"
           />
         </Stack>
       </Grid>
-
       <Snackbar
         open={hideSnackbar}
         autoHideDuration={2500}
