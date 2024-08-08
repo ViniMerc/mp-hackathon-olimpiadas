@@ -42,7 +42,7 @@ const HowToPlayDialog = ({ open, onClose }) => {
               Seu objetivo é conquistar medalhas nas competiçoes Pokemon e
               chegar ao topo da classificação!
             </Typography>
-            <img src="/public/info.png" alt="info" />
+            <img src="/info.png" alt="info" />
             <Typography
               variant="body1"
               sx={{
