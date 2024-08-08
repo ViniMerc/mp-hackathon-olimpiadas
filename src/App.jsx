@@ -8,6 +8,7 @@ import Game1 from "./components/Game1";
 import RankDialog from "./components/dialogs/RankDialog";
 import HowToPlayDialog from "./components/dialogs/HowToPlayDialog";
 import listPokemonsSprite from "./services/listPokemonsSprite";
+import ReferencesDialog from "./components/dialogs/ReferencesDialog";
 
 function App() {
   const [dialogs, setDialogs] = useState({
@@ -31,6 +32,7 @@ function App() {
     modality: "",
     modalityPicture: "",
     pokemon: "",
+    references: "",
   });
 
   return (
@@ -147,6 +149,15 @@ function App() {
                 >
                   Mural de Medalhas
                 </Button>
+                <Button
+                  variant="text"
+                  color="secondary"
+                  onClick={() => {
+                    handleDialogs("references");
+                  }}
+                >
+                  Referências
+                </Button>
               </Stack>
             </Grid>
           </Grid>
@@ -180,6 +191,12 @@ function App() {
         <HowToPlayDialog
           open={dialogs.howToPlay}
           onClose={() => handleDialogs("howToPlay")}
+        />
+      )}
+      {dialogs.references && (
+        <ReferencesDialog
+          open={dialogs.references}
+          onClose={() => handleDialogs("references")}
         />
       )}
     </GlobalTheme>

@@ -9,11 +9,10 @@ import Snackbar from "@mui/material/Snackbar";
 import { useEffect, useState } from "react";
 import { Handshake } from "@mui/icons-material";
 const Game1 = ({ disabled, setDisabled, setPoints, sprite }) => {
-  const [myAttack, setMyAttack] = useState(-1);
-  const [opponentAttack, setOpponentAttack] = useState(-1);
+  const [myAttack, setMyAttack] = useState(0);
+  const [opponentAttack, setOpponentAttack] = useState(0);
   const [hideSnackbar, setHideSnackbar] = useState(false);
   const [randomSprite, setRandomSprite] = useState(0);
-
   const winner =
     myAttack > opponentAttack
       ? "Você venceu!"
@@ -33,7 +32,7 @@ const Game1 = ({ disabled, setDisabled, setPoints, sprite }) => {
     if (winner === "Você venceu!") {
       setPoints((prevPoints) => prevPoints + 1);
       setRandomSprite(Math.floor(Math.random() * 151) + 1);
-      setHideSnackbar(true);
+      setTimeout(() => setHideSnackbar(true), 1000);
     }
   }, [setPoints, winner]);
 
@@ -60,15 +59,15 @@ const Game1 = ({ disabled, setDisabled, setPoints, sprite }) => {
   };
 
   const AttackButtons = ({ setMyAttack, handleAttack, disabled }) => {
-    const attacks = [1, 2, 3];
-    return attacks.map((attack) => (
+    const attackList = [1, 2, 3];
+    return attackList.map((attack) => (
       <IconButton
         key={attack}
         onClick={() => {
           setMyAttack(attack);
           handleAttack();
         }}
-        sx={{ width: "80px", height: "80px", pt: 8 }}
+        sx={{ width: "80px", height: "80px" }}
         disabled={disabled}
       >
         <img
@@ -93,7 +92,7 @@ const Game1 = ({ disabled, setDisabled, setPoints, sprite }) => {
         <Typography variant="h6">
           {disabled
             ? "Competindo..."
-            : myAttack === -1
+            : myAttack === 0
             ? "Escolha um ataque"
             : winner}
         </Typography>
