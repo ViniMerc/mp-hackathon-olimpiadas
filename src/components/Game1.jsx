@@ -40,7 +40,7 @@ const Game1 = ({ disabled, setDisabled, setPoints, sprite }) => {
     if (attack === 1 || attack === 2 || attack === 3) {
       return (
         <img
-          src={`src/assets/game1/attack${attack}.png`}
+          src={`public/attack${attack}.png`}
           style={{ width: "100px" }}
           alt={`Attack ${attack}`}
         />
@@ -71,7 +71,7 @@ const Game1 = ({ disabled, setDisabled, setPoints, sprite }) => {
         disabled={disabled}
       >
         <img
-          src={`src/assets/game1/attack${attack}.png`}
+          src={`public/attack${attack}.png`}
           style={{ width: "80px", height: "80px" }}
           alt={`Attack ${attack}`}
         />
